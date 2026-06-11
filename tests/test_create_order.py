@@ -22,7 +22,9 @@ class TestCreateOrder:
         order_data = OrderData.order.copy()
         order_data["color"] = color
 
-        response = requests.post(ORDERS_URL, json=order_data)
+        with allure.step('Отправить запрос на создание заказа'):
+            response = requests.post(ORDERS_URL, json=order_data)
 
-        assert response.status_code == 201
-        assert "track" in response.json()
+        with allure.step('Проверить код ответа и наличие track в теле ответа'):
+            assert response.status_code == 201
+            assert "track" in response.json()
